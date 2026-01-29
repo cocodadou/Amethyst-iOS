@@ -19,7 +19,7 @@ jobs:
           - platform: 2
             platform_name: ios
     
-    runs-on: macos-latest   # runner cloud gratuit
+    runs-on: macos-latest
     
     steps:
       - name: Remove work folders
@@ -40,17 +40,20 @@ jobs:
       - name: Install gmake
         run: |
           brew install make
-          ln -s $(which make) /usr/local/bin/gmake   # create gmake alias
+          ln -s $(which make) /usr/local/bin/gmake
 
       - name: Install JDK 8
-        run: brew install --cask temurin8
+        run: brew install --cask temurin@8
+
+      - name: Set JDK 8 PATH
+        run: echo 'export PATH="/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home/bin:$PATH"' >> $GITHUB_ENV
 
       - name: Get gl4es latest commit hash
         id: gl4es-sha
         run: |
           echo "sha=$(git ls-remote https://github.com/PojavLauncherTeam/gl4es-114-extra refs/heads/master | grep -io '^\S*')" >> $GITHUB_OUTPUT
 
-      # Cache / build gl4es steps si nécessaire
+      # Étapes de build / cache gl4es si nécessaire
       # ...
 
       - name: Build for ${{ matrix.platform_name }}
