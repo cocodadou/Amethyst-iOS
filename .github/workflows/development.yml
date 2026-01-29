@@ -48,6 +48,9 @@ jobs:
       - name: Set JDK 8 PATH
         run: echo 'export PATH="/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home/bin:$PATH"' >> $GITHUB_ENV
 
+      - name: Install ldid
+        run: brew install ldid
+
       - name: Get gl4es latest commit hash
         id: gl4es-sha
         run: |
