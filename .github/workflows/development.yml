@@ -42,13 +42,17 @@ jobs:
           brew install make
           ln -s $(which make) /usr/local/bin/gmake   # create gmake alias
 
+      - name: Install JDK 8
+        run: brew install --cask temurin8
+
       - name: Get gl4es latest commit hash
         id: gl4es-sha
         run: |
           echo "sha=$(git ls-remote https://github.com/PojavLauncherTeam/gl4es-114-extra refs/heads/master | grep -io '^\S*')" >> $GITHUB_OUTPUT
 
-      # Build gl4es / cache steps skipped (copiez ceux de votre workflow original si nécessaire)
-      
+      # Cache / build gl4es steps si nécessaire
+      # ...
+
       - name: Build for ${{ matrix.platform_name }}
         run: |
           export PATH=/opt/homebrew/bin:$PATH
@@ -92,4 +96,3 @@ jobs:
         with:
           name: AngelAuraAmethyst.dSYM
           path: artifacts/AngelAuraAmethyst.dSYM
-
